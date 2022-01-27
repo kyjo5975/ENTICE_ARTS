@@ -1,0 +1,1 @@
+## This is a README for the ENTICE ARTS project. The purpose of this project is to simulate the ENTICE satellite radiometer and run a sensitivity study using the Atmospheric Radiative Transfer Simulator (ARTS) software.
