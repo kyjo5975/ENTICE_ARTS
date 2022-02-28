@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 def myxmlreader(xmlfile):
 	# Reading the data inside the xml
-	with open('ENTICE_test.ybatch.xml', 'r') as f:
+	with open(xmlfile, 'r') as f:
 		data = f.read()
 
 	# Passing the stored data inside the beautifulsoup parser, storing the returned object
