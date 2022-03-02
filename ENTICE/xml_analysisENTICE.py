@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import re
 import numpy as np
 import matplotlib.pyplot as plt
+from sympy import rotations
 
 def myxmlreader(xmlfile):
 	# Reading the data inside the xml
@@ -46,6 +47,17 @@ ENTICE_freq = [118.75,
 			   380.20,
 			   664.00,
 			   850.00]
+ICI_freq = [183.31,
+			183.31,
+			183.31,
+			243.2,
+			325.15,
+			325.15,
+			325.15,
+			448,
+			448,
+			448,
+			664]
 Offset_freq = ['1',
 			   '2',
 			   3,
@@ -61,16 +73,22 @@ Offset_freq = ['1',
 			   6.20,
 			   4.20,
 			   4.20]
-ENTICE_freq_str = list(set(ENTICE_freq))
+# ENTICE_freq_str = list(set(ENTICE_freq))
+# ICI_freq_str = list(set(ICI_freq))
+freq = ENTICE_freq+ICI_freq
+freq.sort()
+freq_str = list(set(freq))
+
 #for x in ENTICE_freq:
 #	ENTICE_freq_str.append(str(x))
 
 #Read in the Simulation Data
-ENTICE_data = myxmlreader('ENTICE/ENTICE_test.ybatch.xml')
-ENTICEwC_data = myxmlreader('ENTICE/ENTICEwC_test.ybatch.xml')
+ENTICE_data = myxmlreader('ENTICE_test.ybatch.xml')
+ENTICEwC_data = myxmlreader('ENTICEwC_test.ybatch.xml')
+ICI_data = myxmlreader('ICI_test.ybatch.xml')
 # The number of channels
 n = 15
-
+n1 = 11
 #Scenario Data
 ENTICE_sl = ENTICE_data[0:n]
 ENTICE_s2 = ENTICE_data[n:2*n]
@@ -86,71 +104,83 @@ ENTICEwC_s4 = ENTICE_data[3*n:4*n]
 ENTICEwC_s5 = ENTICE_data[4*n:5*n]
 ENTICEwC_s6 = ENTICE_data[5*n:6*n]
 
+ICI_s1 = ICI_data[0:n1]
+ICI_s2 = ICI_data[n1:2*n1]
+ICI_s3 = ICI_data[2*n1:3*n1]
+ICI_s4 = ICI_data[3*n1:4*n1]
+ICI_s5 = ICI_data[4*n1:5*n1]
+ICI_s6 = ICI_data[5*n1:6*n1]
+
 
 # Figure 1
 fig = plt.figure()
-plt.xticks(ENTICE_freq_str)
+plt.xticks(freq_str,rotation=65)
 plt.xlabel('Channel Frequency [GHz]')
 plt.ylabel('Radiance [W/(m^2*Hz*sr]')
 plt.title('Scenario 1')
-plt.scatter(ENTICE_freq, ENTICE_sl,c='k')
-plt.scatter(ENTICE_freq, ENTICEwC_sl,c='b')
-plt.legend(['Without Clouds','With Clouds'])
+plt.plot(ICI_freq, ICI_s1, c='b', marker= '.')
+plt.plot(ENTICE_freq, ENTICE_sl, c='k', marker= '.')
+plt.legend(['ICI','ENTICE'])
 fig.tight_layout()
 
 # Figure 2
 fig = plt.figure()
-plt.xticks(ENTICE_freq_str)
+plt.xticks(freq_str,rotation=65)
 plt.xlabel('Channel Frequency [GHz]')
 plt.ylabel('Radiance [W/(m^2*Hz*sr]')
 plt.title('Scenario 2')
-plt.scatter(ENTICE_freq, ENTICE_s2, c='k')
-plt.scatter(ENTICE_freq, ENTICEwC_s2,c='b')
-plt.legend(['Without Clouds','With Clouds'])
+plt.plot(ICI_freq, ICI_s2, c='b', marker= '.')
+plt.plot(ENTICE_freq, ENTICE_s2, c='k', marker= '.')
+#plt.scatter(ENTICE_freq, ENTICEwC_s2,c='b')
+plt.legend(['ICI','ENTICE'])
 fig.tight_layout()
 
 # Figure 3
 fig = plt.figure()
-plt.xticks(ENTICE_freq_str)
+plt.xticks(freq_str,rotation=65)
 plt.xlabel('Channel Frequency [GHz]')
 plt.ylabel('Radiance [W/(m^2*Hz*sr]')
 plt.title('Scenario 3')
-plt.scatter(ENTICE_freq, ENTICE_s3,c='k')
-plt.scatter(ENTICE_freq, ENTICEwC_s3,c='b')
-plt.legend(['Without Clouds','With Clouds'])
+plt.plot(ICI_freq, ICI_s3, c='b', marker= '.')
+plt.plot(ENTICE_freq, ENTICE_s3, c='k', marker= '.')
+#plt.scatter(ENTICE_freq, ENTICEwC_s3,c='b')
+plt.legend(['ICI','ENTICE'])
 fig.tight_layout()
 
 # Figure 4
 fig = plt.figure()
-plt.xticks(ENTICE_freq_str)
+plt.xticks(freq_str, rotation=65)
 plt.xlabel('Channel Frequency [GHz]')
 plt.ylabel('Radiance [W/(m^2*Hz*sr]')
 plt.title('Scenario 4')
-plt.scatter(ENTICE_freq, ENTICE_s4,c='k')
-plt.scatter(ENTICE_freq, ENTICEwC_s4,c='b')
-plt.legend(['Without Clouds','With Clouds'])
+plt.plot(ICI_freq, ICI_s4, c='b', marker= '.')
+plt.plot(ENTICE_freq, ENTICE_s4, c='k', marker= '.')
+#plt.scatter(ENTICE_freq, ENTICEwC_s4,c='b')
+plt.legend(['ICI','ENTICE'])
 fig.tight_layout()
 
 # Figure 5
 fig = plt.figure()
-plt.xticks(ENTICE_freq_str)
+plt.xticks(freq_str, rotation=65)
 plt.xlabel('Channel Frequency [GHz]')
 plt.ylabel('Radiance [W/(m^2*Hz*sr]')
 plt.title('Scenario 5')
-plt.scatter(ENTICE_freq, ENTICE_s5,c='k')
-plt.scatter(ENTICE_freq, ENTICEwC_s5,c='b')
-plt.legend(['Without Clouds','With Clouds'])
+plt.plot(ICI_freq, ICI_s5, c='b', marker= '.')
+plt.plot(ENTICE_freq, ENTICE_s5, c='k', marker= '.')
+#plt.scatter(ENTICE_freq, ENTICEwC_s5,c='b')
+plt.legend(['ICI','ENTICE'])
 fig.tight_layout()
 
 # Figure 6
 fig = plt.figure()
-plt.xticks(ENTICE_freq_str)
+plt.xticks(freq_str, rotation=65)
 plt.xlabel('Channel Frequency [GHz]')
 plt.ylabel('Radiance [W/(m^2*Hz*sr]')
 plt.title('Scenario 6')
-plt.scatter(ENTICE_freq, ENTICE_s6,c='k')
-plt.scatter(ENTICE_freq, ENTICEwC_s6,c='b')
-plt.legend(['Without Clouds','With Clouds'])
+plt.plot(ICI_freq, ICI_s6, c='b', marker= '.')
+plt.plot(ENTICE_freq, ENTICE_s6, c='k', marker= '.')
+#plt.scatter(ENTICE_freq, ENTICEwC_s6,c='b')
+plt.legend(['ICI','ENTICE'])
 fig.tight_layout()
 
 plt.show()
