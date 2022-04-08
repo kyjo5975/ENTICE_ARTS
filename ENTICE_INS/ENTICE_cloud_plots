@@ -1,0 +1,43 @@
+from bs4 import BeautifulSoup
+import re
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import fit_grid_point
+from sympy import rotations
+
+def myxmlreader(xmlfile):
+	# Reading the data inside the xml
+	with open(xmlfile, 'r') as f:
+		data = f.read()
+
+	# Passing the stored data inside the beautifulsoup parser, storing the returned object
+	Bs_data = BeautifulSoup(data, "xml")
+
+	# Getting the data in one long string because arts is weird
+	Sim_data_string = Bs_data.text
+
+	# splitting that data up into individual strings
+	Sim_data_text = re.split('\n+', Sim_data_string)
+	Sim_data = []
+	for num in Sim_data_text:
+		if num == "":
+			continue
+		else:
+			Sim_data.append(float(num))
+	return(Sim_data)
+
+#Read in the Simulation Data
+ENTICE_C = myxmlreader('CloudCase.xml')
+ENTICE_NC = myxmlreader('NoCloudCase.xml')
+f_grid = myxmlreader('FGRID')
+
+# Figure 1
+fig = plt.figure()
+#plt.xticks(freq_str,rotation=65)
+plt.xlabel('Channel Frequency [GHz]')
+plt.ylabel('Radiance [W/(m^2*Hz*sr]')
+plt.title('Scenario 1')
+plt.plot(f_grid, ENTICE_NC, c='b', marker= '.')
+plt.plot(f_grid, ENTICE_C, c='k', marker= '.')
+plt.legend(['No Clouds','Clouds'])
+fig.tight_layout()
