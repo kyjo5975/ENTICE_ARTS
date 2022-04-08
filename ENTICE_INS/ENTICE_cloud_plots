@@ -27,9 +27,9 @@ def myxmlreader(xmlfile):
 	return(Sim_data)
 
 #Read in the Simulation Data
-ENTICE_C = myxmlreader('CloudCase.xml')
-ENTICE_NC = myxmlreader('NoCloudCase.xml')
-f_grid = myxmlreader('FGRID')
+ENTICE_C = myxmlreader("C:/Users/kbayj/Documents/JPL/ENTICE_ARTS/ENTICE_INS/CloudCase.xml")
+ENTICE_NC = myxmlreader("C:/Users/kbayj/Documents/JPL/ENTICE_ARTS/ENTICE_INS/NoCloudCase.xml")
+f_grid = myxmlreader("C:/Users/kbayj/Documents/JPL/ENTICE_ARTS/ENTICE_INS/FGRID.xml")
 
 # Figure 1
 fig = plt.figure()
@@ -41,3 +41,5 @@ plt.plot(f_grid, ENTICE_NC, c='b', marker= '.')
 plt.plot(f_grid, ENTICE_C, c='k', marker= '.')
 plt.legend(['No Clouds','Clouds'])
 fig.tight_layout()
+
+plt.show()
