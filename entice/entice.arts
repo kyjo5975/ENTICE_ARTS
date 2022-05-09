@@ -1,0 +1,40 @@
+#DEFINITIONS:  -*-sh-*-
+
+Arts2 {
+
+# Observation geometry
+# ---
+# EPS-SG-B[123] shall be 817 km above the surface.  ICI shall be a conical
+# scanner with a 53.1° incidence angle (at surface) = 45° nadir angle =
+# 135° zenith angle
+
+MatrixSetConstant(sensor_pos, 1, 1, 817e3)
+MatrixSetConstant(sensor_los, 1, 1, 135)
+
+# Sensor response setup
+# ---
+# For ENTICE
+#
+# Source: Jiang, J.H., et al., 
+#         A Simulation of Ice Cloud Particle Size, Humidity and Temperature Measurements from the TWICE CubeSat,
+#         Earth and Space Science, 4,
+#         doi:10.1002/ 2017EA000296, 2017.
+
+MatrixSet( sensor_description_amsu,
+           [ 118.75e9, 1.1e9, 0.4e9 ;
+            # 118.75e9, 1.5e9, 0.4e9 ;
+            # 118.75e9, 2.1e9, 0.8e9 ;
+            # 118.75e9, 5.0e9, 2.0e9 ;
+            # 183.31e9, 1.0e9, 0.5e9 ;
+            # 183.31e9, 3.0e9, 1.0e9 ;
+            # 183.31e9, 6.6e9, 1.5e9 ;
+      	    # 243.20e9, 2.5e9, 3.0e9 ;
+      	    # 310.00e9, 2.5e9, 3.0e9 ;
+      	    # 380.20e9, 0.75e9, 0.7e9 ;
+      	    # 380.20e9, 1.80e9, 1.0e9 ;
+            # 380.20e9, 3.35e9, 1.7e9 ;
+            # 380.20e9, 6.20e9, 3.6e9 ;
+            # 664.00e9, 4.20e9, 4.0e9 ;
+	     850.00e9, 4.20e9, 4.0e9 ] )
+sensor_responseSimpleAMSU
+}
